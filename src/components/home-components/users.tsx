@@ -3,6 +3,7 @@ import { User } from "../../constants";
 import UserCard from "./user-card";
 import SearchBar from "./search-bar";
 import SortUsers from "./sort-users";
+import AddUserForm from "./user-form";
 
 interface UserData {
   users: User[];
@@ -10,7 +11,9 @@ interface UserData {
 
 const Users = () => {
   const [users, setUsers] = useState<User[] | undefined>([]);
+
   const [filteredUsers, setFilteredUsers] = useState<User[] | undefined>([]);
+
   const [sortOption, setSortOption] = useState<string>(""); // State for sorting option
 
   useEffect(() => {
@@ -57,17 +60,22 @@ const Users = () => {
       setFilteredUsers(sortedUsers);
     }
   };
-
+  const handleAddUser = (newUser: User) => {
+    // Add the new user to the beginning of the existing list
+    setUsers((prevUsers) => [newUser, ...prevUsers!]);
+    setFilteredUsers((prevFilteredUsers) => [newUser, ...prevFilteredUsers!]);
+  };
   return (
     <>
-      <div className="flex gap-2 items-center w-full justify-center" >
+      <div className="flex gap-2 items-center w-full justify-center">
         <SearchBar onHandleChange={handleChange} />
         <SortUsers
           sortOption={sortOption}
           onHandleSortChange={handleSortChange}
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mx-4 ">
+      <AddUserForm onAddUser={handleAddUser} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mx-4  ">
         {filteredUsers?.map((user) => (
           <UserCard key={user.id} user={user} />
         ))}

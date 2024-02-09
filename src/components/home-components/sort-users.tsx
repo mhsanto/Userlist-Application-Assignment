@@ -5,7 +5,7 @@ type SortedUsersProps = {
 const SortUsers = ({ onHandleSortChange, sortOption }: SortedUsersProps) => {
   return (
     <div className="bg-gray-50  flex items-center gap-2 rounded-md p-2 my-2  ring-1">
-      <label htmlFor="sortSelect" className="w-full">Sort by:</label>
+      <label htmlFor="sortSelect" className="w-full whitespace-nowrap">Sort by:</label>
       <select
         id="sortSelect"
         onChange={(e) => onHandleSortChange(e.target.value)}

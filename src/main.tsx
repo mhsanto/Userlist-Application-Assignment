@@ -5,10 +5,16 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Homepage from "./components/pages/home.tsx";
 import NotFoundPage from "./components/pages/not-found.tsx";
+import User from "./components/pages/user.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Homepage />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/user/:userId",
+    element: <User />,
     errorElement: <NotFoundPage />,
   },
 ]);

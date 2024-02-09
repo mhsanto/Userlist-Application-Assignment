@@ -14,7 +14,7 @@ const UserCard = ({ user }: UserCardProps) => {
       <img
         src={user.image}
         alt={user.firstName}
-        className="w-20 h-20 object-contain"
+        className="w-20 h-20 object-cover aspect-square"
       />
       <div className="flex  justify-between gap-3">
         <div className="flex flex-col ">

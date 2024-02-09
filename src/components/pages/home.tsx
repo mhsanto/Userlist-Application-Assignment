@@ -1,5 +1,12 @@
+import Users from "../home-components/users";
+
 const Homepage = () => {
-    return ( <div>Home</div> );
-}
- 
+  return (
+    <div>
+      home
+      <Users />
+    </div>
+  );
+};
+
 export default Homepage;

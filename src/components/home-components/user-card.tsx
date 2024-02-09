@@ -10,7 +10,7 @@ type UserCardProps = {
 };
 const UserCard = ({ user }: UserCardProps) => {
   return (
-    <div className="flex flex-col sm:flex-row w-full  md:max-w-[500px]  shadow-sm border-[1px]  items-center border-blue-500 rounded-md gap-3 p-3 my-1 hover:shadow-md transition hover:shadow-lime-600">
+    <div className="flex flex-col sm:flex-row w-full  md:max-w-[500px]  shadow-sm border-[1px]  items-center border-blue-500 rounded-md gap-3 p-3 my-1 hover:shadow-md transition hover:shadow-lime-600 overflow-hidden flex-1">
       <img
         src={user.image}
         alt={user.firstName}
@@ -19,27 +19,24 @@ const UserCard = ({ user }: UserCardProps) => {
       <div className="flex  justify-between gap-3">
         <div className="flex flex-col ">
           <p className="text-xs">@{user.username}</p>
-          <Link to={`/user/${user.id}`} className="flex gap-2 font-semibold hover:underline transition">
+          <Link
+            to={`/user/${user.id}`}
+            className="flex gap-2 font-semibold hover:underline transition"
+          >
             <span>{user.firstName}</span>
             <span>{user.lastName}</span>
           </Link>
-          <Link
-            to={`/user/${user.id}`}
-            className="text-sm underline flex items-center gap-1 hover:no-underline transition"
-          >
+          <p className="text-sm underline flex items-center gap-1 hover:no-underline transition line-clamp-1 ">
             <SiMailgun />
             {user.email}
-          </Link>
+          </p>
 
-          <Link
-            to={`/user/${user.id}`}
-            className="text-xs whitespace-nowrap py-2 hover:underline transition"
-          >
-            <span className="flex  items-center gap-1">
+          <p className="text-xs whitespace-nowrap py-2 hover:underline transition">
+            <span className="flex  items-center gap-1 line-clamp-1 ">
               <FaRegBuilding />
               {user.company.name}
             </span>
-          </Link>
+          </p>
 
           <div className=" flex gap-1.5 flex-wrap">
             <p className="text-xs w-fit bg-green-500/50 px-2 flex items-center gap-2 p-1 rounded-sm text-green-900 font-semibold whitespace-nowrap hover:bg-green-500/80 transition">

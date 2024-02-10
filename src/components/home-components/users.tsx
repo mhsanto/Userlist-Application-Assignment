@@ -11,10 +11,8 @@ interface UserData {
 
 const Users = () => {
   const [users, setUsers] = useState<User[] | undefined>([]);
-
   const [filteredUsers, setFilteredUsers] = useState<User[] | undefined>([]);
-
-  const [sortOption, setSortOption] = useState<string>(""); // State for sorting option
+  const [sortOption, setSortOption] = useState<string>("");
 
   useEffect(() => {
     async function fetchUsers() {
@@ -26,45 +24,54 @@ const Users = () => {
     fetchUsers();
   }, []);
 
-  const handleChange = (value: string) => {
-    if (users) {
-      const trimmedValue = value.trim();
-      const filtered =
-        trimmedValue === ""
-          ? users
-          : users.filter((user) => {
-              const fullName = `${user.firstName} ${user.lastName}`;
-              return fullName
-                .toLowerCase()
-                .includes(trimmedValue.toLowerCase());
-            });
-      setFilteredUsers(filtered);
+  const filterUsers = (value: string) => {
+    const trimmedValue = value.trim();
+    return trimmedValue === ""
+      ? users
+      : users?.filter((user) => {
+          const fullName = `${user.firstName} ${user.lastName}`;
+          return fullName.toLowerCase().includes(trimmedValue.toLowerCase());
+        }) ?? [];
+  };
+
+  const sortUsers = (option: string, userList: User[]) => {
+    const sortedUsers = [...userList];
+    if (option === "name") {
+      sortedUsers.sort((a, b) =>
+        (a.firstName + a.lastName).localeCompare(b.firstName + b.lastName)
+      );
+    } else if (option === "email") {
+      sortedUsers.sort((a, b) => a.email.localeCompare(b.email));
+    } else if (option === "company") {
+      sortedUsers.sort((a, b) => a.company.name.localeCompare(b.company.name));
     }
+    return sortedUsers;
+  };
+
+  const handleChange = (value: string) => {
+    setFilteredUsers(filterUsers(value));
   };
 
   const handleSortChange = (option: string) => {
     setSortOption(option);
-    if (filteredUsers) {
-      const sortedUsers = [...filteredUsers];
-      if (option === "name") {
-        sortedUsers.sort((a, b) =>
-          (a.firstName + a.lastName).localeCompare(b.firstName + b.lastName)
-        );
-      } else if (option === "email") {
-        sortedUsers.sort((a, b) => a.email.localeCompare(b.email));
-      } else if (option === "company") {
-        sortedUsers.sort((a, b) =>
-          a.company.name.localeCompare(b.company.name)
-        );
-      }
-      setFilteredUsers(sortedUsers);
+    if (users) {
+      setFilteredUsers((prevFilteredUsers) =>
+        sortUsers(option, prevFilteredUsers!)
+      );
     }
   };
+
   const handleAddUser = (newUser: User) => {
-    // Add the new user to the beginning of the existing list
-    setUsers((prevUsers) => [newUser, ...prevUsers!]);
-    setFilteredUsers((prevFilteredUsers) => [newUser, ...prevFilteredUsers!]);
+    setUsers((prevUsers) => [newUser, ...(prevUsers ?? [])]);
+    if (sortOption !== "") {
+      setFilteredUsers((prevFilteredUsers) =>
+        sortUsers(sortOption, [newUser, ...(prevFilteredUsers ?? [])])
+      );
+    } else {
+      setFilteredUsers((prevFilteredUsers) => [newUser, ...(prevFilteredUsers ?? [])]);
+    }
   };
+
   return (
     <>
       <div className="flex gap-2 items-center w-full justify-center">

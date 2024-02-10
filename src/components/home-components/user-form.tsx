@@ -63,14 +63,10 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onAddUser }) => {
   };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Validate the form data if needed
-    // ...
-
-    // Call the callback to add the new user
+  
     onAddUser(newUser);
 
-    // Clear the form
-    setNewUser({
+        setNewUser({
       id: 0,
       firstName: "",
       lastName: "",

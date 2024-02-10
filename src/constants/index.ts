@@ -53,7 +53,7 @@ export interface User {
   hair?: Hair;
   domain?: string;
   ip?: string;
-  address?: Address;
+  address: Address;
   macAddress?: string;
   university?: string;
   bank?: Bank;

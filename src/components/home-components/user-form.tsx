@@ -63,10 +63,10 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onAddUser }) => {
   };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     onAddUser(newUser);
 
-        setNewUser({
+    setNewUser({
       id: 0,
       firstName: "",
       lastName: "",
@@ -83,7 +83,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onAddUser }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col p-4 rounded-md shadow my-3 ring-1 max-w-md w-full items-center gap-2"
+      className="flex flex-col p-4 rounded-md shadow my-3 ring-1 max-w-md w-fit sm:w-full items-center gap-2 "
     >
       <div className="flex w-full">
         <InputField
@@ -105,23 +105,25 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onAddUser }) => {
         />
       </div>
 
-      <InputField
-        label="Email"
-        type="text"
-        name="email"
-        value={newUser.email}
-        onChange={handleInputChange}
-        placeholder="johncena@ucantsee.me"
-      />
+      <div className="flex">
+        <InputField
+          label="Email"
+          type="text"
+          name="email"
+          value={newUser.email}
+          onChange={handleInputChange}
+          placeholder="johncena@ucantsee.me"
+        />
 
-      <InputField
-        label="Company"
-        type="text"
-        name="company.name"
-        value={newUser.company.name}
-        onChange={handleInputChange}
-        placeholder="Word Wrestling Entertainment"
-      />
+        <InputField
+          label="Company"
+          type="text"
+          name="company.name"
+          value={newUser.company.name}
+          onChange={handleInputChange}
+          placeholder="Word Wrestling Entertainment"
+        />
+      </div>
 
       <InputField
         label="Address"

@@ -20,7 +20,9 @@ const UserCard = ({ user }: UserCardProps) => {
       />
       <div className="flex  justify-between gap-3">
         <div className="flex flex-col ">
-          <p className="text-xs">@{user.username ? user.username : user.firstName.toLowerCase()}</p>
+          <p className="text-xs">
+            @{user.username ? user.username : user.firstName.toLowerCase()}
+          </p>
           <Link
             to={`/user/${user.id}`}
             className="flex gap-2 font-semibold hover:underline transition"
@@ -43,15 +45,15 @@ const UserCard = ({ user }: UserCardProps) => {
           <div className=" flex gap-1.5 flex-wrap">
             <p className="text-xs w-fit bg-green-500/50 px-2 flex items-center gap-2 p-1 rounded-sm text-green-900 font-semibold whitespace-nowrap hover:bg-green-500/80 transition">
               <FaAddressCard className="text-green-900" />
-              {user.address.address}
+              {user.address.address ? user.address.address : "No Address"}
             </p>
             <p className="flex-grow-1 bg-blue-500/50 text-xs px-2  flex items-center gap-2  p-1 rounded-sm text-blue-900 font-semibold hover:bg-blue-500/80 transition">
               <SiGooglestreetview className="text-blue-900" />
-              {user.address.state}
+              {user?.address.state}
             </p>
             <p className=" bg-yellow-500/40 text-xs w-fit px-2 flex items-center gap-2  p-1 rounded-sm font-semibold text-yellow-900 hover:bg-yellow-500/80 transition">
               <FaCity className="text-yellow-900" />
-              {user.address.city}
+              {user?.address.city}
             </p>
           </div>
         </div>

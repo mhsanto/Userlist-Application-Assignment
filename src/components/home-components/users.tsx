@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { User } from "../../constants";
 import UserCard from "./user-card";
 import SearchBar from "./search-bar";
 import SortUsers from "./sort-users";
 import AddUserForm from "./user-form";
+import LoadingPage from "./loading";
 
 interface UserData {
   users: User[];
@@ -68,13 +69,16 @@ const Users = () => {
         sortUsers(sortOption, [newUser, ...(prevFilteredUsers ?? [])])
       );
     } else {
-      setFilteredUsers((prevFilteredUsers) => [newUser, ...(prevFilteredUsers ?? [])]);
+      setFilteredUsers((prevFilteredUsers) => [
+        newUser,
+        ...(prevFilteredUsers ?? []),
+      ]);
     }
   };
 
   return (
     <>
-      <div className="flex gap-2 items-center w-full justify-center">
+      <div className="flex gap-4 flex-col sm:flex-row items-start  w-full justify-center px-4">
         <SearchBar onHandleChange={handleChange} />
         <SortUsers
           sortOption={sortOption}
@@ -82,9 +86,12 @@ const Users = () => {
         />
       </div>
       <AddUserForm onAddUser={handleAddUser} />
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mx-4  ">
         {filteredUsers?.map((user) => (
-          <UserCard key={user.id} user={user} />
+          <Suspense fallback={<LoadingPage />} key={user.id}>
+            <UserCard user={user} key={user.id} />
+          </Suspense>
         ))}
       </div>
     </>

@@ -1,30 +1,19 @@
-import { Suspense, useEffect, useState } from "react";
+import { useState } from "react";
 import { User } from "../../constants";
 import UserCard from "./user-card";
 import SearchBar from "./search-bar";
 import SortUsers from "./sort-users";
+import { useLoaderData } from "react-router-dom";
 import AddUserForm from "./user-form";
-import LoadingPage from "./loading";
-
-interface UserData {
-  users: User[];
-}
-
 const Users = () => {
-  const [users, setUsers] = useState<User[] | undefined>([]);
-  const [filteredUsers, setFilteredUsers] = useState<User[] | undefined>([]);
+  const usersData = useLoaderData();
+  const [users, setUsers] = useState<User[]>(usersData as User[]);
+  console.log(users);
+
+  const [filteredUsers, setFilteredUsers] = useState<User[]>(
+    usersData as User[]
+  );
   const [sortOption, setSortOption] = useState<string>("");
-
-  useEffect(() => {
-    async function fetchUsers() {
-      const response = await fetch("https://dummyjson.com/users");
-      const data: UserData = await response.json();
-      setUsers(data.users);
-      setFilteredUsers(data.users);
-    }
-    fetchUsers();
-  }, []);
-
   const filterUsers = (value: string) => {
     const trimmedValue = value.trim();
     return trimmedValue === ""
@@ -89,9 +78,7 @@ const Users = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mx-4  ">
         {filteredUsers?.map((user) => (
-          <Suspense fallback={<LoadingPage />} key={user.id}>
-            <UserCard user={user} key={user.id} />
-          </Suspense>
+          <UserCard user={user} key={user.id} />
         ))}
       </div>
     </>

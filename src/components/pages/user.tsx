@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import {  useNavigate,  useParams } from "react-router-dom";
 import { User as UserProps } from "../../constants";
 import UserCard from "../home-components/user-card";
 import LoadingPage from "../home-components/loading";
 function User() {
+  const navigation = useNavigate()
   const { userId } = useParams<{ userId: string }>();
   const [user, setUser] = useState<UserProps | undefined>();
 
@@ -21,12 +22,12 @@ function User() {
       <div className="flex flex-col ">
         {user ? <UserCard user={user} /> : <LoadingPage />}
 
-        <Link
-          to="/"
+        <button
+          onClick={()=>navigation(-1)}
           className="text-center top-0 bg-orange-400/70 font-medium rounded-md p-2 text-orange-950 my-4"
         >
           Go Home
-        </Link>
+        </button>
       </div>
     </div>
   );

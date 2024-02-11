@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import  { loader as rootLoader } from "./components/pages/root";
 import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -9,6 +10,7 @@ import User from "./components/pages/user.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
+    loader: rootLoader,
     element: <Homepage />,
     errorElement: <NotFoundPage />,
   },
